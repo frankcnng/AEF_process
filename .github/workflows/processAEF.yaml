@@ -3,11 +3,21 @@
 name:	processAEF
 
 on:
-	push:
-		paths:
-		- 'src/**'
-	pull_request:
-		paths:
-			- 'src/**'
+  push:
+    paths:
+      - 'src/**'
 
 jobs:
+  processAEF:
+    name: process AEF submissions in the unprocessed directory
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install python-docx
+      - run: python AEFSyntax/main.py
